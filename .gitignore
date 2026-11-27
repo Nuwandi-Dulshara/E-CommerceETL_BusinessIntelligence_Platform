@@ -1,0 +1,9 @@
+.venv/
+.runtime/
+data/
+online+retail/
+__pycache__/
+.pytest_cache/
+*.log
+*.xlsx
+.streamlit/secrets.toml
