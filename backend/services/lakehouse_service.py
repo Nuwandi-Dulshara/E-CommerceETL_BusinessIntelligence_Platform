@@ -1,7 +1,7 @@
 """Bounded previews from Parquet mirrors of committed Delta layers."""
 from pathlib import Path
 import duckdb
-from pipelines.warehouse import TABLES
+from backend.pipelines.warehouse import TABLES
 
 LAYERS = {'Bronze': ['bronze'], 'Silver': ['silver', 'quarantine'], 'Gold': TABLES}
 

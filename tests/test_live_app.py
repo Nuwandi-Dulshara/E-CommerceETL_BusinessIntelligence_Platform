@@ -1,13 +1,13 @@
 """Read-only UI integration tests against a locally published real snapshot."""
 import pytest
-from config import DATA
-from pipelines.metadata import published
+from backend.config import DATA
+from backend.pipelines.metadata import published
 
 
 @pytest.mark.skipif(published(DATA) is None, reason='Run the real-data pipeline first')
 def test_all_pages_filters_and_saved_queries():
     from streamlit.testing.v1 import AppTest
-    app = AppTest.from_file('app.py', default_timeout=40).run()
+    app = AppTest.from_file('frontend/app.py', default_timeout=40).run()
     assert not app.exception
     assert len(app.metric) == 6
     original_revenue = app.metric[0].value

@@ -1,6 +1,6 @@
 import streamlit as st
-from services.analytics import query, metrics
-from views.common import chart, kpis, money, no_matches
+from backend.services.analytics import query, metrics
+from frontend.views.common import chart, kpis, money, no_matches
 
 
 def render(args):

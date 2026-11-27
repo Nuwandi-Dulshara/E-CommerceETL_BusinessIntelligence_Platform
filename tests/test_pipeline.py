@@ -4,7 +4,7 @@ import pytest
 
 @pytest.fixture(scope='session')
 def spark():
-    from config import spark_session
+    from backend.config import spark_session
     session = spark_session('CommerceFlow-tests')
     yield session
     session.stop()
@@ -31,7 +31,7 @@ def source(tmp_path):
 
 def test_missing_columns(tmp_path):
     import pandas as pd
-    from pipelines.ingestion import excel_to_csv
+    from backend.pipelines.ingestion import excel_to_csv
     path = tmp_path / 'bad.xlsx'
     pd.DataFrame({'InvoiceNo': ['1']}).to_excel(path, index=False)
     with pytest.raises(ValueError, match='Missing required columns'):
@@ -39,9 +39,9 @@ def test_missing_columns(tmp_path):
 
 
 def test_validation_and_gold(spark, source, tmp_path):
-    from pipelines.ingestion import ingest
-    from pipelines.validation import validate
-    from pipelines.transformation import gold_tables
+    from backend.pipelines.ingestion import ingest
+    from backend.pipelines.validation import validate
+    from backend.pipelines.transformation import gold_tables
     bronze, _ = ingest(spark, source, tmp_path, 'test', None)
     silver, rejected, stats = validate(bronze)
     assert bronze.count() == 8
@@ -62,7 +62,7 @@ def test_validation_and_gold(spark, source, tmp_path):
 
 
 def test_lock_excludes_second_writer(tmp_path):
-    from pipelines.metadata import writer_lock
+    from backend.pipelines.metadata import writer_lock
     with writer_lock(tmp_path):
         with pytest.raises(RuntimeError, match='already running'):
             with writer_lock(tmp_path):
@@ -73,8 +73,8 @@ def test_lock_excludes_second_writer(tmp_path):
 
 def test_rejects_fractional_quantity_and_tiny_negative_price(spark, tmp_path):
     import pandas as pd
-    from pipelines.ingestion import COLUMNS, ingest
-    from pipelines.validation import validate
+    from backend.pipelines.ingestion import COLUMNS, ingest
+    from backend.pipelines.validation import validate
     source = tmp_path / 'precision.xlsx'
     rows = [
         ['1','A','Item','1.0000000000001','2011-01-01','1','1','UK'],

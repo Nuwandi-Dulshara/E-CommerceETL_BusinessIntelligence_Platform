@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 import sys
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 DATA = Path(os.environ.get('COMMERCEFLOW_DATA', ROOT / 'data')).resolve()
 DEFAULT_SOURCE = ROOT / 'online+retail' / 'Online Retail.xlsx'
 

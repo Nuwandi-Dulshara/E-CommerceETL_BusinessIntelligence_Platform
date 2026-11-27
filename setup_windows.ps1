@@ -31,4 +31,4 @@ if (-not (Test-Path '.venv/Scripts/python.exe')) {
 }
 & ./.venv/Scripts/python.exe -m pip install -r requirements.txt
 if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
-Write-Output 'Setup complete. Run ./.venv/Scripts/python.exe -m pipelines.run --download --sample-rows 50000'
+Write-Output 'Setup complete. Run ./.venv/Scripts/python.exe -m backend.pipelines.run --download --sample-rows 50000'

@@ -1,6 +1,6 @@
 import streamlit as st
-from services.analytics import query, query_sql
-from views.common import download
+from backend.services.analytics import query, query_sql
+from frontend.views.common import download
 
 
 def render(args):

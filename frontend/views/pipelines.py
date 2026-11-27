@@ -1,9 +1,8 @@
-from pathlib import Path
 import pandas as pd
 import streamlit as st
-from config import DATA, DEFAULT_SOURCE
-from pipelines.metadata import runs, stages
-from services.pipeline_service import active, launch, log_text
+from backend.config import DATA, DEFAULT_SOURCE
+from backend.pipelines.metadata import runs, stages
+from backend.services.pipeline_service import active, launch, log_text
 
 
 @st.fragment(run_every='3s')

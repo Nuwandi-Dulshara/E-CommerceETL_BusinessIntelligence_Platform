@@ -1,12 +1,19 @@
 """CommerceFlow — local lakehouse and business intelligence."""
+from pathlib import Path
+import sys
+
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+
 import streamlit as st
-from config import ROOT, DATA
-from pipelines.metadata import published
-from services.analytics import bounds
-from views import overview, sales, customers, pipelines, lakehouse, quality, sql_analytics
+from backend.config import ROOT, DATA
+from backend.pipelines.metadata import published
+from backend.services.analytics import bounds
+from frontend.views import overview, sales, customers, pipelines, lakehouse, quality, sql_analytics
 
 st.set_page_config(page_title='CommerceFlow · Retail intelligence', page_icon='◈', layout='wide', initial_sidebar_state='expanded')
-st.markdown('<style>' + (ROOT / 'assets/styles.css').read_text(encoding='utf-8') + '</style>', unsafe_allow_html=True)
+st.markdown('<style>' + (ROOT / 'frontend' / 'assets' / 'styles.css').read_text(encoding='utf-8') + '</style>', unsafe_allow_html=True)
 snapshot = published(DATA)
 pages = ['Overview', 'Sales Analytics', 'Customer Analytics', 'ETL Pipelines', 'Lakehouse Explorer', 'Data Quality', 'SQL Analytics']
 
