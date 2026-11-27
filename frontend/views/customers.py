@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
-from services.analytics import query
-from views.common import chart, kpis, download
+from backend.services.analytics import query
+from frontend.views.common import chart, kpis, download
 
 
 def render(args):

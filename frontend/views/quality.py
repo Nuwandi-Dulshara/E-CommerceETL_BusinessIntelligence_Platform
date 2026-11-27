@@ -1,10 +1,10 @@
 import json
 import pandas as pd
 import streamlit as st
-from config import DATA
-from pipelines.metadata import runs
-from services.lakehouse_service import inspect_table, rejected_csv
-from views.common import chart, kpis
+from backend.config import DATA
+from backend.pipelines.metadata import runs
+from backend.services.lakehouse_service import inspect_table, rejected_csv
+from frontend.views.common import chart, kpis
 
 
 def render(snapshot):

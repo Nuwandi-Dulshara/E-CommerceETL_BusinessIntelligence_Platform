@@ -5,8 +5,8 @@ import os
 import subprocess
 import sys
 import uuid
-from config import DATA, ROOT
-from pipelines.metadata import writer_lock, runs, update_run, now
+from backend.config import DATA, ROOT
+from backend.pipelines.metadata import writer_lock, runs, update_run, now
 
 
 def active(data: Path = DATA) -> bool:
@@ -33,7 +33,7 @@ def launch(source: str, sample_rows: int | None, download: bool, data: Path = DA
         if not download and not Path(source).is_file():
             raise ValueError('Select an existing Excel file')
         run_id = uuid.uuid4().hex
-        args = [sys.executable, '-m', 'pipelines.run', '--run-id', run_id]
+        args = [sys.executable, '-m', 'backend.pipelines.run', '--run-id', run_id]
         args += ['--download'] if download else ['--source', source]
         if sample_rows is not None:
             if sample_rows < 1:

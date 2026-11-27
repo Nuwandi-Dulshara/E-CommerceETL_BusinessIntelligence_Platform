@@ -1,4 +1,4 @@
-"""Run with python -m pipelines.run --source <xlsx> [--sample-rows N]."""
+"""Run with python -m backend.pipelines.run --source <xlsx> [--sample-rows N]."""
 import argparse
 import json
 import logging
@@ -7,12 +7,12 @@ from pathlib import Path
 import sys
 import time
 import uuid
-from config import DATA, DEFAULT_SOURCE, spark_session
-from pipelines.ingestion import download_source, ingest
-from pipelines.validation import validate
-from pipelines.transformation import gold_tables
-from pipelines.warehouse import build_warehouse, verify_warehouse, finalize
-from pipelines.metadata import writer_lock, update_run, stage, now, publish, runs
+from backend.config import DATA, DEFAULT_SOURCE, spark_session
+from backend.pipelines.ingestion import download_source, ingest
+from backend.pipelines.validation import validate
+from backend.pipelines.transformation import gold_tables
+from backend.pipelines.warehouse import build_warehouse, verify_warehouse, finalize
+from backend.pipelines.metadata import writer_lock, update_run, stage, now, publish, runs
 
 
 def execute(source: Path | None = None, sample_rows: int | None = None, download: bool = False,

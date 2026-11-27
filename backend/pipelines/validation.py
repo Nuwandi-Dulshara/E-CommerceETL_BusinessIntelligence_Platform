@@ -1,6 +1,6 @@
 """Spark validation: preserve rejected source values and overlapping flags."""
 from pyspark.sql import DataFrame, functions as F, Window
-from pipelines.ingestion import COLUMNS
+from backend.pipelines.ingestion import COLUMNS
 
 NAMES = ['invoice_no', 'stock_code', 'description', 'quantity_raw', 'invoice_date_raw', 'unit_price_raw', 'customer_id', 'country']
 

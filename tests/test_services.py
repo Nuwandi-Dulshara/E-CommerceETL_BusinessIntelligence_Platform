@@ -3,7 +3,7 @@ import pytest
 
 
 def test_parameterized_filters():
-    from services.analytics import filters
+    from backend.services.analytics import filters
     sql, params = filters(date(2011, 1, 1), date(2011, 1, 2), ["France' OR 1=1 --"])
     assert "France'" not in sql
     assert params == [date(2011, 1, 1), date(2011, 1, 2), "France' OR 1=1 --"]
@@ -13,7 +13,7 @@ def test_parameterized_filters():
 
 def test_predefined_queries_and_metrics(tmp_path):
     import duckdb
-    from services.analytics import query, metrics, QUERIES
+    from backend.services.analytics import query, metrics, QUERIES
     path = tmp_path / 'warehouse.duckdb'
     with duckdb.connect(str(path)) as con:
         con.execute('''CREATE TABLE transactions AS SELECT * FROM (VALUES
@@ -38,7 +38,7 @@ def test_predefined_queries_and_metrics(tmp_path):
 
 def test_publication_failure_is_atomic(tmp_path):
     import sqlite3
-    from pipelines.metadata import connect, publish, published, update_run, runs
+    from backend.pipelines.metadata import connect, publish, published, update_run, runs
     update_run(tmp_path, 'old', status='running')
     old = dict(run_id='old', snapshot_path='old.duckdb', stats={}, duration=1)
     publish(tmp_path, old)
@@ -52,8 +52,8 @@ def test_publication_failure_is_atomic(tmp_path):
 
 
 def test_failed_source_preserves_publication(tmp_path):
-    from pipelines.metadata import publish, published, update_run, runs
-    from pipelines.run import execute
+    from backend.pipelines.metadata import publish, published, update_run, runs
+    from backend.pipelines.run import execute
     update_run(tmp_path, 'old', status='running')
     publish(tmp_path, dict(run_id='old', snapshot_path='old.duckdb', stats={}, duration=1))
     with pytest.raises(FileNotFoundError):
@@ -66,11 +66,11 @@ def test_cross_process_lock_and_active_state(tmp_path):
     import os
     import subprocess
     import sys
-    from services.pipeline_service import active
-    from pipelines.metadata import runs, writer_lock
+    from backend.services.pipeline_service import active
+    from backend.pipelines.metadata import runs, writer_lock
     code = '''from pathlib import Path
 import sys
-from pipelines.metadata import writer_lock,update_run,now
+from backend.pipelines.metadata import writer_lock,update_run,now
 data=Path(sys.argv[1])
 with writer_lock(data):
     update_run(data,'live',status='running',started_at=now())

@@ -2,7 +2,7 @@
 from pathlib import Path
 import os
 import duckdb
-from config import ROOT
+from backend.config import ROOT
 
 TABLES = ['fact_transactions', 'dim_product', 'dim_customer', 'dim_date', 'agg_daily_sales', 'agg_country_sales', 'agg_product_sales']
 
@@ -13,7 +13,7 @@ def build_warehouse(run_path: Path) -> Path:
         for table in TABLES:
             glob = str(run_path / 'parquet' / table / '*.parquet')
             con.execute(f'CREATE TABLE {table} AS SELECT * FROM read_parquet(?)', [glob])
-        con.execute((ROOT / 'sql' / 'analytics.sql').read_text(encoding='utf-8'))
+        con.execute((ROOT / 'backend' / 'sql' / 'analytics.sql').read_text(encoding='utf-8'))
     return target
 
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 import streamlit as st
-from services.lakehouse_service import LAYERS, inspect_table
+from backend.services.lakehouse_service import LAYERS, inspect_table
 
 
 def render(snapshot):

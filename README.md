@@ -13,16 +13,16 @@ The current checkout already has `.venv` and a local `.runtime`. For a fresh che
 ./setup_windows.ps1
 
 # Process the supplied original Excel file
-./.venv/Scripts/python.exe -m pipelines.run --source "online+retail/Online Retail.xlsx" --sample-rows 50000
+./.venv/Scripts/python.exe -m backend.pipelines.run --source "online+retail/Online Retail.xlsx" --sample-rows 50000
 
 # Or acquire and cache the original UCI Excel file
-./.venv/Scripts/python.exe -m pipelines.run --download --sample-rows 50000
+./.venv/Scripts/python.exe -m backend.pipelines.run --download --sample-rows 50000
 
 # Full dataset is the default: omit --sample-rows
-./.venv/Scripts/python.exe -m pipelines.run --source "online+retail/Online Retail.xlsx"
+./.venv/Scripts/python.exe -m backend.pipelines.run --source "online+retail/Online Retail.xlsx"
 
 ./.venv/Scripts/python.exe -m pytest -q
-./.venv/Scripts/python.exe -m streamlit run app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
+./.venv/Scripts/python.exe -m streamlit run frontend/app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
 ```
 
 Open **http://127.0.0.1:8501**. In restricted execution environments, Spark needs permission for JVM/Python localhost communication. Normal desktop PowerShell does not use the agent sandbox. Alternatively, install Java 17 and the native Hadoop dependencies yourself, create `.venv` with `python -m venv .venv`, and install with `./.venv/Scripts/python.exe -m pip install -r requirements.txt`. On Linux/macOS, use `.venv/bin/python`; native Windows compatibility files are unnecessary.
